@@ -17,13 +17,32 @@ export const setupServer = () => {
   app.use(cors());
   app.use(express.json());
   app.get('/contacts', async (req, res) => {
-    const data = await contactServices.getAllContacts();
+    const contacts = await contactServices.getAllContacts();
     res.json({
       status: 200,
       message: 'Successfully found contacts!',
-      data,
+      data: contacts,
     });
   });
+
+  app.get('/contacts/:contactId', async (req, res, next) => {
+    const { _id } = req.params;
+    const contact = await contactServices.getContactById(_id);   
+    
+    // Відповідь, якщо контакт не знайдено
+	if (!contact) {
+	  res.status(404).json({
+		  message: 'Contact not found'
+	  });
+	  return;
+	}
+
+	// Відповідь, якщо контакт знайдено
+    res.status(200).json({
+      data: contact,
+    });
+  });
+
 
   app.use('*', (req, res) => {
     res.status(404).json({
