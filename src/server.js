@@ -26,8 +26,8 @@ export const setupServer = () => {
   });
 
   app.get('/contacts/:contactId', async (req, res, next) => {
-    const { _id } = req.params;
-    const contact = await contactServices.getContactById(_id);   
+    const { contactId } = req.params;
+    const contact = await contactServices.getContactById(contactId);   
     
     // Відповідь, якщо контакт не знайдено
 	if (!contact) {
