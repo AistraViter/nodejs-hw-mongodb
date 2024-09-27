@@ -17,7 +17,7 @@ export const getContactntByIdController = async (req, res, next) => {
 
   // Відповідь, якщо контакт не знайдено
   if (!contact) {
-    throw createHttpError(404, 'Student not found');
+    throw createHttpError(404, 'Contact not found');
   }
 
   // Відповідь, якщо контакт знайдено
