@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import * as contactServices from '../services/contacts.js';
 
 export const getContactsController = async (req, res) => {
@@ -16,8 +17,7 @@ export const getContactntByIdController = async (req, res, next) => {
 
   // Відповідь, якщо контакт не знайдено
   if (!contact) {
-    next(new Error('Contact not found'));
-    return;
+    throw createHttpError(404, 'Student not found');
   }
 
   // Відповідь, якщо контакт знайдено
