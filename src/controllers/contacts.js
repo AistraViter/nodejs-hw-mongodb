@@ -11,7 +11,7 @@ export const getContactsController = async (req, res) => {
   });
 };
 
-export const getContactntByIdController = async (req, res, next) => {
+export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
   const contact = await contactServices.getContactById(contactId);
 
@@ -35,3 +35,17 @@ export const createContactController = async (req, res) => {
       data: contact,
     });
   };
+
+  export const deleteContactController  = async (req, res, next) => {
+    const { contactId } = req.params;
+  
+    const contact = await contactServices.deleteContact(contactId);
+  
+    if (!contact) {
+      next(createHttpError(404, 'Contact not found'));
+      return;
+    }
+  
+    res.status(204).send();
+  };
+  
