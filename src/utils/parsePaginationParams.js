@@ -1,3 +1,5 @@
+import { PAGINATION_DEFAULTS } from '../constants/configDefaults.js';
+
 const parseNumber = (number, defaultValue) => {
   const isString = typeof number === 'string';
   if (!isString) return defaultValue;
@@ -13,8 +15,8 @@ const parseNumber = (number, defaultValue) => {
 export const parsePaginationParams = (query) => {
   const { page, perPage } = query;
 
-  const parsedPage = parseNumber(page, 1);
-  const parsedPerPage = parseNumber(perPage, 10);
+  const parsedPage = parseNumber(page, PAGINATION_DEFAULTS.page);
+  const parsedPerPage = parseNumber(perPage, PAGINATION_DEFAULTS.perPage);
 
   return {
     page: parsedPage,
