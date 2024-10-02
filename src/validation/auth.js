@@ -13,7 +13,7 @@ export const registerUserSchema = Joi.object({
   password: Joi.string()
   .min(8)
   .max(30)
-  .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.[!@#$%^&*])'))
+  // .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.[!@#$%^&*])'))
   .required()
   .messages({
     'string.min': 'Password should have at least {#limit} characters',
