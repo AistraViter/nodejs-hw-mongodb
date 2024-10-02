@@ -23,7 +23,7 @@ const baseContactSchema = Joi.object({
     .optional() // Необов'язкове поле
     .messages({
       'string.email': 'Email must be a valid email address',
-      'string.max': 'Username should have at most {#limit} characters',
+      'string.max': 'Email should have at most {#limit} characters',
     }),
   contactType: Joi.string()
     .valid('work', 'home', 'personal')
@@ -38,7 +38,9 @@ const baseContactSchema = Joi.object({
   }),
 });
 
-
 export const createContactSchema = baseContactSchema;
 
-export const updateContactSchema = baseContactSchema.fork(['name', 'phoneNumber', 'contactType'], (field) => field.optional());
+export const updateContactSchema = baseContactSchema.fork(
+  ['name', 'phoneNumber', 'contactType'],
+  (field) => field.optional(),
+);
