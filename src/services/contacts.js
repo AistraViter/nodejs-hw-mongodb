@@ -1,7 +1,7 @@
 import { ContactsCollection } from '../db/models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-import { PAGINATION_DEFAULTS } from '../constants/configDefaults.js';
-import { SORT_DEFAULTS } from '../constants/configDefaults.js';
+import { PAGINATION_DEFAULTS } from '../constants/index.js';
+import { SORT_DEFAULTS } from '../constants/index.js';
 
 export const getAllContacts = async ({
   page = PAGINATION_DEFAULTS.page,

@@ -1,4 +1,4 @@
-import { SORT_DEFAULTS } from '../constants/configDefaults.js';
+import { SORT_DEFAULTS } from '../constants/index.js';
 import { SORT_ORDER } from "../constants/index.js";
 
 const parseSortOrder = (sortOrder) => {

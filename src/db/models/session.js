@@ -9,7 +9,7 @@ const sessionsSchema = new Schema(
     },
     accessToken: {
       type: String,
-      required: false,
+      required: true,
     },
     refreshToken: {
       type: String,

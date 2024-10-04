@@ -1,4 +1,4 @@
-import { PAGINATION_DEFAULTS } from '../constants/configDefaults.js';
+import { PAGINATION_DEFAULTS } from '../constants/index.js';
 
 const parseNumber = (number, defaultValue) => {
   const isString = typeof number === 'string';
