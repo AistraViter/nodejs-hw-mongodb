@@ -13,7 +13,6 @@ export const registerUserSchema = Joi.object({
   password: Joi.string()
   .min(8)
   .max(30)
-  // .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.[!@#$%^&*])'))
   .required()
   .messages({
     'string.min': 'Password should have at least {#limit} characters',
@@ -21,3 +20,9 @@ export const registerUserSchema = Joi.object({
     'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
     'any.required': 'Password is required',
   }),});
+
+  export const loginUserSchema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  });
+  
