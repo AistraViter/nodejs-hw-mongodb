@@ -2,6 +2,12 @@ import { model, Schema } from 'mongoose';
 
 const contactsSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId, // ObjectId для зв'язування з користувачами
+      ref: 'users', // Додаємо референс до колекції користувачів
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,

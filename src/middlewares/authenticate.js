@@ -31,12 +31,13 @@ export const authenticate = async (req, res, next) => {
 
   if (isAccessTokenExpired) {
     next(createHttpError(401, 'Access token expired'));
+    return; // Додати цей рядок
   }
 
   const user = await UsersCollection.findById(session.userId);
 
   if (!user) {
-    next(createHttpError(401));
+    next(createHttpError(401, 'User not found'));
     return;
   }
 
