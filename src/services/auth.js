@@ -6,7 +6,11 @@ import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import { FIFTEEN_MINUTES, THIRTY_DAYS, TEMPLATES_DIR } from '../constants/index.js';
+import {
+  FIFTEEN_MINUTES,
+  THIRTY_DAYS,
+  TEMPLATES_DIR,
+} from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
 import { SMTP } from '../constants/index.js';
@@ -100,7 +104,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-//Скидання паролю
+//Скидання паролю ---- Надсилання емейлу
 
 export const requestResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
@@ -122,7 +126,6 @@ export const requestResetToken = async (email) => {
     TEMPLATES_DIR,
     'reset-password-email.html',
   );
-
 
   const templateSource = (
     await fs.readFile(resetPasswordTemplatePath)
@@ -150,6 +153,20 @@ export const requestResetToken = async (email) => {
   }
 };
 
+//Скидання паролю ---- Перехід на сторінку ресет
+
+export const getResetPasswordTemplate = async (token) => {
+  const resetPasswordTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'reset-password-page.html',
+  );
+
+  const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
+  const template = handlebars.compile(templateSource);
+  return template({ token }); // Передаємо значення токена в шаблон
+};
+
+//Скидання паролю ---- Оновлення паролю
 export const resetPassword = async (payload) => {
   let entries;
 

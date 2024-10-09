@@ -4,6 +4,7 @@ import {
   logoutUser,
   refreshUsersSession,
   requestResetToken,
+  getResetPasswordTemplate,
   resetPassword,
 } from '../services/auth.js';
 import { THIRTY_DAYS } from '../constants/index.js';
@@ -76,7 +77,7 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-//Скидання паролю 
+//Скидання паролю ---- Надсилання емейлу
 export const requestResetEmailController = async (req, res) => {
   await requestResetToken(req.body.email);
   res.json({
@@ -86,6 +87,20 @@ export const requestResetEmailController = async (req, res) => {
   });
 };
 
+//Скидання паролю ---- Перехід на сторінку ресет
+
+export const renderResetPasswordPageController = async (req, res) => {
+  const { token } = req.query; // Отримуємо токен з URL
+
+  if (!token) {
+    return res.status(400).send('Token is missing');
+  }
+
+  const html = await getResetPasswordTemplate(token);
+  res.send(html);
+};
+
+//Скидання паролю ---- Оновлення паролю
 export const resetPasswordController = async (req, res) => {
   await resetPassword(req.body);
   res.json({

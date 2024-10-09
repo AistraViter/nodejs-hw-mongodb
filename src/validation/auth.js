@@ -26,7 +26,7 @@ export const registerUserSchema = Joi.object({
     password: Joi.string().required(),
   });
   
-  //Скидання паролю --- УРОК 6
+  //Скидання паролю 
 
   export const requestResetEmailSchema = Joi.object({
     email: Joi.string().email().required(),
@@ -34,5 +34,9 @@ export const registerUserSchema = Joi.object({
   export const resetPasswordSchema = Joi.object({
     password: Joi.string().required(),
     token: Joi.string().required(),
+  });
+  
+  export const resetPasswordQuerySchema = Joi.object({
+    token: Joi.string().required(), // Валідація для токена
   });
   

@@ -4,6 +4,7 @@ import {
   registerUserSchema,
   loginUserSchema,
   requestResetEmailSchema,
+  resetPasswordQuerySchema,
   resetPasswordSchema,
 } from '../validation/auth.js';
 import {
@@ -12,9 +13,11 @@ import {
   logoutUserController,
   refreshUserSessionController,
   requestResetEmailController,
-  resetPasswordController
+  renderResetPasswordPageController,
+  resetPasswordController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import { validateQuery } from '../middlewares/validateQuery.js'; 
 
 const authRouter = Router();
 
@@ -43,40 +46,14 @@ authRouter.post(
   ctrlWrapper(requestResetEmailController),
 );
 
-authRouter.get('/reset-password', (req, res) => {
-  const { token } = req.query; // Отримуємо токен з URL
-
-  if (!token) {
-    return res.status(400).send('Token is missing');
-  }
-
-  // Відправляємо простий HTML
-  res.send(`
-    <html>
-      <head>
-        <title>Reset Password</title>
-      </head>
-      <body>
-        <h2>Reset Your Password</h2>
-        <form action="/reset-pwd" method="POST">
-          <input type="hidden" name="token" value="${token}" />
-          <div>
-            <label for="password">New Password:</label>
-            <input type="password" name="password" required />
-          </div>
-          <div>
-            <button type="submit">Reset Password</button>
-          </div>
-        </form>
-      </body>
-    </html>
-  `);
-});
-
+authRouter.get(
+  '/reset-password',
+  validateQuery(resetPasswordQuerySchema), // Додаємо валідацію для параметрів запиту
+  ctrlWrapper(renderResetPasswordPageController),
+);
 
 authRouter.post(
   '/reset-pwd',
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
-
