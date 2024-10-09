@@ -13,9 +13,18 @@
 //     "password":  "12345678"
 //  }
 
-//  http://localhost:50632/contacts
-//  http://localhost:50632/auth/login
+
+// {
+//     "name": "Iryna",
+//     "email":  "iryna.pidkhlibna@gmail.com",
+//     "password":  "12345678"
+//  }
+//  localhost:3000/contacts
+//  localhost:3000/auth/login
+//  localhost:3000/auth/request-reset-email
+
 
 //  npm run dev
 
-//  Bearer CwmJz/F6CXQdKX7pAOfdRDKVqCQBjUAVSDhDFk0f
+//  Bearer zWSdV4P8lBF/yNEWMO2msFwklOadFhEkDlZRanb2
+
