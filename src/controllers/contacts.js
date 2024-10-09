@@ -47,7 +47,11 @@ export const getContactByIdController = async (req, res) => {
 // Контролер для створення нового контакту
 export const createContactController = async (req, res, next) => {
   const userId = req.user._id; // отримання userId з authenticate middleware
-  const contact = await contactServices.createContact(userId, req.body);
+  const contactData = {
+    ...req.body,
+    photo: req.file ? req.file.path : null, // шлях до фото, якщо воно завантажено
+  };
+  const contact = await contactServices.createContact(userId, contactData);
 
   res.status(201).json({
     status: 201,
@@ -75,12 +79,16 @@ export const deleteContactController = async (req, res, next) => {
 export const patchContactController = async (req, res, next) => {
   const userId = req.user._id;
   const { contactId } = req.params;
+  const updatedData = {
+    ...req.body,
+    photo: req.file ? req.file.path : undefined, // оновлення фото, якщо воно є
+  };
 
   const result = await contactServices.updateContact(
     userId,
     contactId,
-    req.body,
-  ); // додано userId
+    updatedData,
+  );
 
   if (!result) {
     next(createHttpError(404, 'Contact not found'));

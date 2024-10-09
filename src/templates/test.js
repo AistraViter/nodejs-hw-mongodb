@@ -20,7 +20,7 @@
 //     "password":  "12345678"
 //  }
 //  localhost:3000/contacts
-//  localhost:3000/auth/login
+//  localhost:55188/auth/login
 //  localhost:3000/auth/request-reset-email
 
 
@@ -31,7 +31,7 @@
 // {
 //     "name": "Gerat",
 //     "email":  "gerat44202@scarden.com",
-//     "password":  "qwertyuio"
+//     "password":  "12121212"
 //   }
 
 // http://localhost:4000/auth/reset-password?token=

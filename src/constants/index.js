@@ -27,6 +27,11 @@ export const SMTP = {
   SMTP_FROM: 'SMTP_FROM',
 };
 
-//Надсилання листів --- УРОК 6
+//Надсилання листів 
 
 export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
+
+//Завантаження зображень 
+
+export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
+export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
