@@ -6,7 +6,7 @@ import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
+import { FIFTEEN_MINUTES, THIRTY_DAYS, TEMPLATES_DIR } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
 import { SMTP } from '../constants/index.js';
@@ -119,11 +119,10 @@ export const requestResetToken = async (email) => {
   );
 
   const resetPasswordTemplatePath = path.join(
-    process.cwd(),
-    'src',
-    'templates',
+    TEMPLATES_DIR,
     'reset-password-email.html',
   );
+
 
   const templateSource = (
     await fs.readFile(resetPasswordTemplatePath)
