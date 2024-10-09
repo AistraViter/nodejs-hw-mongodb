@@ -28,3 +28,8 @@
 
 //  Bearer zWSdV4P8lBF/yNEWMO2msFwklOadFhEkDlZRanb2
 
+// {
+//     "name": "Gerat",
+//     "email":  "gerat44202@scarden.com",
+//     "password":  "12345678"
+//  }

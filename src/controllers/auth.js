@@ -76,7 +76,7 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-//Скидання паролю --- УРОК 6
+//Скидання паролю 
 export const requestResetEmailController = async (req, res) => {
   await requestResetToken(req.body.email);
   res.json({

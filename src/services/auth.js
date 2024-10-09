@@ -13,7 +13,6 @@ import { SMTP } from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 
-
 const hashPassword = async (password) => {
   return await bcrypt.hash(password, 10);
 };
@@ -23,23 +22,22 @@ const comparePasswords = async (inputPassword, storedPassword) => {
 };
 
 const createSession = () => {
-    const accessToken = randomBytes(30).toString('base64');
-    const refreshToken = randomBytes(30).toString('base64');
-  
-    return {
-      accessToken,
-      refreshToken,
-      accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-      refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
-    };
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+
+  return {
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   };
-  
+};
+
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (user) throw createHttpError(409, 'Email in use');
 
   const encryptedPassword = await hashPassword(payload.password);
-
 
   return await UsersCollection.create({
     ...payload,
@@ -53,7 +51,10 @@ export const loginUser = async (payload) => {
     throw createHttpError(404, 'User not found');
   }
 
-  const isPasswordValid = await comparePasswords(payload.password, user.password);
+  const isPasswordValid = await comparePasswords(
+    payload.password,
+    user.password,
+  );
 
   if (!isPasswordValid) {
     throw createHttpError(401, 'Unauthorized');
@@ -99,7 +100,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-//Скидання паролю --- УРОК 6
+//Скидання паролю
 
 export const requestResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
@@ -121,9 +122,9 @@ export const requestResetToken = async (email) => {
     process.cwd(),
     'src',
     'templates',
-    'reset-password-email.html'
+    'reset-password-email.html',
   );
-  
+
   const templateSource = (
     await fs.readFile(resetPasswordTemplatePath)
   ).toString();
@@ -134,14 +135,21 @@ export const requestResetToken = async (email) => {
     link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
   });
 
-  await sendEmail({
-    from: env(SMTP.SMTP_FROM),
-    to: email,
-    subject: 'Reset your password',
-    html,
-  });
+  try {
+    await sendEmail({
+      from: env(SMTP.SMTP_FROM),
+      to: email,
+      subject: 'Reset your password',
+      html,
+    });
+  } catch (err) {
+    if (err instanceof Error)
+      throw createHttpError(
+        500,
+        'Failed to send the email, please try again later.',
+      );
+  }
 };
-
 
 export const resetPassword = async (payload) => {
   let entries;
@@ -169,4 +177,3 @@ export const resetPassword = async (payload) => {
     { password: encryptedPassword },
   );
 };
-
