@@ -163,7 +163,7 @@ export const getResetPasswordTemplate = async (token) => {
 
   const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
   const template = handlebars.compile(templateSource);
-  return template({ token }); // Передаємо значення токена в шаблон
+  return template({ token, resetPwdRoute: '/auth/reset-pwd' }); // Передаємо значення токена в шаблон
 };
 
 //Скидання паролю ---- Оновлення паролю
