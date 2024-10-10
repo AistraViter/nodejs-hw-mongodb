@@ -3,6 +3,7 @@ import * as contactServices from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 // Контролер для отримання всіх контактів з урахуванням userId
 export const getContactsController = async (req, res) => {
@@ -47,9 +48,16 @@ export const getContactByIdController = async (req, res) => {
 // Контролер для створення нового контакту
 export const createContactController = async (req, res, next) => {
   const userId = req.user._id; // отримання userId з authenticate middleware
-  const contactData = {
+  const photo = req.file;
+  
+  let photoUrl;
+
+  if (photo) {
+    photoUrl = await saveFileToUploadDir(photo);
+  }
+const contactData = {
     ...req.body,
-    photo: req.file ? req.file.path : null, // шлях до фото, якщо воно завантажено
+    photo: photoUrl,
   };
   const contact = await contactServices.createContact(userId, contactData);
 
@@ -79,9 +87,17 @@ export const deleteContactController = async (req, res, next) => {
 export const patchContactController = async (req, res, next) => {
   const userId = req.user._id;
   const { contactId } = req.params;
+
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    photoUrl = await saveFileToUploadDir(photo);
+  }
   const updatedData = {
     ...req.body,
-    photo: req.file ? req.file.path : undefined, // оновлення фото, якщо воно є
+    photo: photoUrl,
   };
 
   const result = await contactServices.updateContact(
