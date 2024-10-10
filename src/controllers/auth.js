@@ -6,8 +6,10 @@ import {
   requestResetToken,
   getResetPasswordTemplate,
   resetPassword,
+  loginOrSignupWithGoogle,
 } from '../services/auth.js';
 import { THIRTY_DAYS } from '../constants/index.js';
+import { generateAuthUrl } from '../utils/googleOAuth2.js';
 
 const setupSession = (res, session) => {
   const cookieOptions = {
@@ -87,7 +89,7 @@ export const requestResetEmailController = async (req, res) => {
   });
 };
 
-//Скидання паролю ---- Перехід на сторінку ресет
+//Перехід на сторінку ресет
 
 export const renderResetPasswordPageController = async (req, res) => {
   const { token } = req.query; // Отримуємо токен з URL
@@ -100,12 +102,38 @@ export const renderResetPasswordPageController = async (req, res) => {
   res.send(html);
 };
 
-//Скидання паролю ---- Оновлення паролю
+//Оновлення паролю
 export const resetPasswordController = async (req, res) => {
   await resetPassword(req.body);
   res.json({
     message: 'Password was successfully reset!',
     status: 200,
     data: {},
+  });
+};
+
+// Вхід через гугл
+
+export const getGoogleOAuthUrlController = async (req, res) => {
+  const url = generateAuthUrl();
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAuth url!',
+    data: {
+      url,
+    },
+  });
+};
+
+export const loginWithGoogleController = async (req, res) => {
+  const session = await loginOrSignupWithGoogle(req.body.code);
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in via Google OAuth!',
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };

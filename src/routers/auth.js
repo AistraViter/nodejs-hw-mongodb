@@ -6,6 +6,7 @@ import {
   requestResetEmailSchema,
   resetPasswordQuerySchema,
   resetPasswordSchema,
+  loginWithGoogleOAuthSchema,
 } from '../validation/auth.js';
 import {
   registerUserController,
@@ -15,9 +16,12 @@ import {
   requestResetEmailController,
   renderResetPasswordPageController,
   resetPasswordController,
+  getGoogleOAuthUrlController,
+  loginWithGoogleController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { validateQuery } from '../middlewares/validateQuery.js'; 
+import { validateQuery } from '../middlewares/validateQuery.js';
+
 
 const authRouter = Router();
 
@@ -56,4 +60,12 @@ authRouter.post(
   '/reset-pwd',
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
+);
+
+authRouter.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
+
+authRouter.post(
+  '/confirm-oauth',
+  validateBody(loginWithGoogleOAuthSchema),
+  ctrlWrapper(loginWithGoogleController),
 );

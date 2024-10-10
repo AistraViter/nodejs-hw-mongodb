@@ -40,3 +40,7 @@ export const registerUserSchema = Joi.object({
     token: Joi.string().required(), // Валідація для токена
   });
   
+  export const loginWithGoogleOAuthSchema = Joi.object({
+    code: Joi.string().required(),
+  });
+  
