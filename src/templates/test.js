@@ -20,19 +20,41 @@
 //     "password":  "12345678"
 //  }
 //  localhost:3000/contacts
-//  localhost:55188/auth/login
+//  localhost:4000/auth/login
 //  localhost:3000/auth/request-reset-email
 
 
 //  npm run dev
 
-//  Bearer zWSdV4P8lBF/yNEWMO2msFwklOadFhEkDlZRanb2
+//  Bearer OiZKQczwmIbE+caslLEnSZNnUVICowzg1QkyeePn
 
 // {
 //     "name": "Gerat",
 //     "email":  "gerat44202@scarden.com",
 //     "password":  "12121212"
 //   }
+//   {
+//     "name": "Yulia Shevchenko",
+//     "phoneNumber": "+380000000004",
+//     "email": null,
+//     "isFavourite": false,
+//     "contactType": "personal",
+//     "createdAt": "2024-05-08T16:12:14.954173",
+//     "updatedAt": "2024-05-08T16:12:14.954174"
+//   },
+
+// {
+//     "name": "Kateryna Povalenko",
+//     "phoneNumber": "+380000000005",
+//     "email": "ivan5@example.com",
+//     "isFavourite": false,
+//     "contactType": "personal",
+//     "createdAt": "2024-05-08T16:12:14.954178",
+//     "updatedAt": "2024-05-08T16:12:14.954179"
+//   },
+
+
+
 
 // http://localhost:4000/auth/reset-password?token=
 // {
