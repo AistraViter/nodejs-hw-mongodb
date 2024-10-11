@@ -34,17 +34,13 @@ responses:
               type: object
               $ref: '../../../components/schemas/contact.yaml'
   '400':
-    description: Invalid request parameters or body
     $ref: '../../../components/responses/400.yaml'
 
   '401':
-    description: Unauthorized - Access token is missing or invalid
     $ref: '../../../components/responses/401.yaml'
 
   '404':
-    description: Resource not found
     $ref: '../../../components/responses/404.yaml'
 
   '500':
-    description: Internal server error
     $ref: '../../../components/responses/500.yaml'

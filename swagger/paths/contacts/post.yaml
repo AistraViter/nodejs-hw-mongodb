@@ -42,7 +42,7 @@ requestBody:
             format: binary
 responses:
   '201':
-    description: Creates a contact
+    description: Successfully creates a contact!
     content:
       application/json:
         schema:
@@ -62,11 +62,8 @@ responses:
               type: object
               $ref: '../../components/schemas/contact.yaml'
   '400':
-    description: Invalid request parameters or body
     $ref: '../../components/responses/400.yaml'
   '401':
-    description: Unauthorized - Access token is missing or invalid
     $ref: '../../components/responses/401.yaml'
   '500':
-    description: Internal server error
     $ref: '../../components/responses/500.yaml'
