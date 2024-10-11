@@ -397,10 +397,25 @@
                     "description": "Contact's email",
                     "example": "john.doe@example.com"
                   },
-                  "phone": {
+                  "phoneNumber": {
                     "type": "string",
                     "description": "Contact's phone number",
                     "example": "+1234567890"
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "description": "Type of contact (e.g. work, home, personal)",
+                    "example": "work",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "description": "Is this contact marked as favourite?",
+                    "example": false
                   },
                   "photo": {
                     "description": "Contact's photo",
@@ -480,29 +495,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted contact",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted contact with id 65ca67e7ae7f10c88b598384!"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Successfully deleted contact. No content returned."
           },
           "400": {
             "$ref": "#/components/responses/400"
@@ -636,17 +630,13 @@
     },
     "/auth/refresh": {
       "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "tags": [
           "Auth"
         ],
         "summary": "Refresh user token",
         "operationId": "refreshToken",
         "description": "Obtain a new access token using a valid refresh token.",
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
