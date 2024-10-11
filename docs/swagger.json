@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://nodejs-hw-mongodb-2-0yc5.onrender.com"
     }
   ],
   "tags": [
@@ -27,17 +30,17 @@
   "paths": {
     "/contacts": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
         "description": "Get list of contacts with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "query",
@@ -169,35 +172,31 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters or body",
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorized - Access token is missing or invalid",
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Resource not found",
             "$ref": "#/components/responses/404"
           },
           "500": {
-            "description": "Internal server error",
             "$ref": "#/components/responses/500"
           }
         }
       },
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Create contact",
         "operationId": "createContact",
         "description": "Create a contact with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -251,7 +250,7 @@
         },
         "responses": {
           "201": {
-            "description": "Creates a contact",
+            "description": "Successfully creates a contact!",
             "content": {
               "application/json": {
                 "schema": {
@@ -280,15 +279,12 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters or body",
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorized - Access token is missing or invalid",
             "$ref": "#/components/responses/401"
           },
           "500": {
-            "description": "Internal server error",
             "$ref": "#/components/responses/500"
           }
         }
@@ -296,17 +292,17 @@
     },
     "/contacts/{id}": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Get contact by id",
         "operationId": "getContact",
         "description": "Get contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -349,35 +345,31 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters or body",
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorized - Access token is missing or invalid",
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Resource not found",
             "$ref": "#/components/responses/404"
           },
           "500": {
-            "description": "Internal server error",
             "$ref": "#/components/responses/500"
           }
         }
       },
       "patch": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Update contact by id",
         "operationId": "updateContact",
         "description": "Update contact details by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -451,35 +443,31 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters or body",
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorized - Access token is missing or invalid",
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Resource not found",
             "$ref": "#/components/responses/404"
           },
           "500": {
-            "description": "Internal server error",
             "$ref": "#/components/responses/500"
           }
         }
       },
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Delete contact by id",
         "operationId": "deleteContact",
         "description": "Delete a contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -517,19 +505,196 @@
             }
           },
           "400": {
-            "description": "Invalid request parameters or body",
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorized - Access token is missing or invalid",
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Resource not found",
             "$ref": "#/components/responses/404"
           },
           "500": {
-            "description": "Internal server error",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "description": "Register a new user and create a session.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "example": "Invalid email or password format",
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login",
+        "operationId": "loginUser",
+        "description": "Authenticate user and create a session.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ],
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "d1f4eaf5..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "example": "Invalid email or password",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh user token",
+        "operationId": "refreshToken",
+        "description": "Obtain a new access token using a valid refresh token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "refreshToken"
+                ],
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "description": "The refresh token used to obtain a new access token."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Access token refreshed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "description": "The new access token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "The new refresh token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "example": "Invalid refresh token format",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
             "$ref": "#/components/responses/500"
           }
         }
@@ -592,6 +757,30 @@
             "description": "Link to contact's photo",
             "type": "string",
             "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "password123"
           }
         }
       }
@@ -689,6 +878,26 @@
                       "example": "Contact not found"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "User already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User with this email already exists."
                 }
               }
             }

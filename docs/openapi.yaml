@@ -14,20 +14,40 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  # - url: #посилання на задеплоєний сайт
+  - url: https://nodejs-hw-mongodb-2-0yc5.onrender.com
 paths:
   /contacts:
     get:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/get.yaml
     post:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/post.yaml
   /contacts/{id}:
     get:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/get.yaml
     patch:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/patch.yaml
     delete:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+    
 components:
   securitySchemes:
     bearerAuth:

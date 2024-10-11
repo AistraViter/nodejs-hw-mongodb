@@ -44,3 +44,6 @@ export const CLOUDINARY = {
   ENABLE_CLOUDINARY: true,
 };
 
+//Документація  
+export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
+

@@ -1,0 +1,39 @@
+tags:
+  - Auth
+summary: Refresh user token
+operationId: refreshToken
+description: 'Obtain a new access token using a valid refresh token.'
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - refreshToken
+        properties:
+          refreshToken:
+            type: string
+            description: 'The refresh token used to obtain a new access token.'
+responses:
+  '200':
+    description: 'Access token refreshed successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            accessToken:
+              type: string
+              description: 'The new access token'
+            refreshToken:
+              type: string
+              description: 'The new refresh token'
+  '400':
+    example: 'Invalid refresh token format'
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

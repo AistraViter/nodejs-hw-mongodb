@@ -1,0 +1,26 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: 'Register a new user and create a session.'
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+          $ref: '../../components/schemas/user.yaml'
+responses:
+  '201':
+    description: 'User registered successfully'
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/user.yaml'
+  '400':
+    example: 'Invalid email or password format'
+    $ref: '../../components/responses/400.yaml'
+  '409':
+    $ref: '../../components/responses/409.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

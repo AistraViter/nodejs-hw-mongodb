@@ -1,0 +1,47 @@
+tags:
+  - Auth
+summary: User login
+operationId: loginUser
+description: 'Authenticate user and create a session.'
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            format: email
+            example: 'user@example.com'
+          password:
+            type: string
+            example: 'password123'
+responses:
+  '200':
+    description: 'Login successful'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - accessToken
+            - refreshToken
+          properties:
+            accessToken:
+              type: string
+              example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+            refreshToken:
+              type: string
+              example: 'd1f4eaf5...'
+  '400':
+    example: 'Invalid email or password'
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
